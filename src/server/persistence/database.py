@@ -13,22 +13,34 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 USERS_PATH: str = "../../extra/data/users.json"
 TASKS_PATH: str = "../../extra/data/tasks.json"
 
+
 # Declaracion de constantes que almacenaran los valores de nuestra base de datos falsa.
-USERS: List[User] = []
-TASKS: List[Task] = []
+class Database:
+    """
+    Base de datos falsa.
+    """
+    Users: List[User] = []
+    Tasks: List[Task] = []
 
 
 def load(nombre: str, ruta: str, coleccion: List, clase) -> None:
+    """
+    Permite cargar la base de datos falsa.
+    :param nombre: Nombre de la coleccion.
+    :param ruta: Ruta del archivo json con los elementos de la coleccion.
+    :param coleccion: Coleccion a cargar.
+    :param clase: Clase de los elementos dentro de la coleccion.
+    """
     print(f'-- Cargango {nombre} ...')
     with io.open(ruta, 'r', encoding='utf8') as jsonFile:
         content = json.load(jsonFile)
         [coleccion.append(clase(**item)) for item in content]
 
 
-print(f'Usuarios antes de cargar:{len(USERS)}')
-load('usuarios', USERS_PATH, USERS, User)
-print(f'Usuarios cargados: {len(USERS)}')
+print(f'Usuarios antes de cargar:{len(Database.Users)}')
+load('usuarios', USERS_PATH, Database.Users, User)
+print(f'Usuarios cargados: {len(Database.Users)}')
 
-print(f'Usuarios antes de cargar:{len(TASKS)}')
-load('tareas', TASKS_PATH, TASKS, Task)
-print(f'Usuarios cargados: {len(TASKS)}')
+print(f'Usuarios antes de cargar:{len(Database.Tasks)}')
+load('tareas', TASKS_PATH, Database.Tasks, Task)
+print(f'Usuarios cargados: {len(Database.Tasks)}')
