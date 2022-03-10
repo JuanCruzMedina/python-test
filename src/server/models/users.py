@@ -13,3 +13,6 @@ class User(BaseModel):
     phone: str
     website: str
     company: Company
+
+    def __repr__(self):
+        return f'{self.id} - {self.name}'
